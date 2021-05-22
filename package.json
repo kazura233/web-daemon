@@ -1,0 +1,58 @@
+{
+  "name": "@kazura/web-daemon",
+  "version": "0.0.1-alpha.1",
+  "description": "web-daemon",
+  "keywords": [
+    "daemon"
+  ],
+  "homepage": "https://github.com/kazura233/web-daemon",
+  "repository": "https://github.com/kazura233/web-daemon.git",
+  "bugs": "https://github.com/kazura233/web-daemon/issues",
+  "author": "kazura233 <kazira233@gmail.com>",
+  "license": "MIT",
+  "main": "lib/web-daemon.js",
+  "unpkg": "dist/web-daemon.js",
+  "module": "es/web-daemon.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src",
+    "types"
+  ],
+  "scripts": {
+    "clean": "rimraf dist lib es types",
+    "build": "rollup -c"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.48.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
+  },
+  "npmName": "@kazura233/web-daemon",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
