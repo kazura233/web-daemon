@@ -58,7 +58,7 @@ class WebDaemon {
    */
   public forceCall() {
     this.len++
-    this.task(() => this.synchronize(), this)
+    window.setTimeout(() => this.task(() => this.synchronize(), this))
     if (this.isAtEnd()) this.pause()
   }
 
