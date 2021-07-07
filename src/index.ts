@@ -31,7 +31,7 @@ class WebDaemon {
     /**
      * 需要被反复调用的任务
      */
-    private task: (daemon: WebDaemon) => void,
+    private task: (next: () => void, daemon: WebDaemon) => void,
     /**
      * 每次调用之间的时间间隔（以毫秒为单位）。默认值为100。
      */
@@ -58,7 +58,7 @@ class WebDaemon {
    */
   public forceCall() {
     this.len++
-    this.task(this)
+    this.task(() => this.synchronize(), this)
     if (this.isAtEnd()) this.pause()
   }
 
@@ -69,10 +69,7 @@ class WebDaemon {
     if (this.paused) return
     window.clearTimeout(this.timer)
     WebDaemon.daemons.delete(this.timer)
-    this.timer = window.setTimeout(() => {
-      this.forceCall()
-      this.synchronize()
-    }, this.rate)
+    this.timer = window.setTimeout(() => this.forceCall(), this.rate)
     WebDaemon.daemons.set(this.timer, this)
   }
 
