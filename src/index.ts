@@ -65,10 +65,14 @@ class WebDaemon {
   /**
    * 将启动的守护程序的计时器与其调用时间同步。
    */
-  private synchronize() {
+  public synchronize() {
     if (this.paused) return
-    window.clearInterval(this.timer)
-    this.timer = window.setInterval(() => this.forceCall(), this.rate)
+    window.clearTimeout(this.timer)
+    WebDaemon.daemons.delete(this.timer)
+    this.timer = window.setTimeout(() => {
+      this.forceCall()
+      this.synchronize()
+    }, this.rate)
     WebDaemon.daemons.set(this.timer, this)
   }
 
@@ -76,9 +80,9 @@ class WebDaemon {
    * 暂停守护程序
    */
   public pause() {
-    window.clearInterval(this.timer)
-    this.paused = true
+    window.clearTimeout(this.timer)
     WebDaemon.daemons.delete(this.timer)
+    this.paused = true
   }
 
   /**
