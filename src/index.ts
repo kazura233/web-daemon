@@ -1,3 +1,8 @@
+// https://github.com/kazura233/web-daemon/issues/1
+const global: Window & typeof globalThis = (
+  typeof globalThis !== 'undefined' ? globalThis : self || window
+) as any
+
 class WebDaemon {
   /**
    * 所有守护程序
@@ -58,7 +63,7 @@ class WebDaemon {
    */
   public forceCall() {
     this.len++
-    window.setTimeout(() => this.task(() => this.synchronize(), this))
+    global.setTimeout(() => this.task(() => this.synchronize(), this))
     if (this.isAtEnd()) this.pause()
   }
 
@@ -67,9 +72,9 @@ class WebDaemon {
    */
   public synchronize() {
     if (this.paused) return
-    window.clearTimeout(this.timer)
+    global.clearTimeout(this.timer)
     WebDaemon.daemons.delete(this.timer)
-    this.timer = window.setTimeout(() => this.forceCall(), this.rate)
+    this.timer = global.setTimeout(() => this.forceCall(), this.rate)
     WebDaemon.daemons.set(this.timer, this)
   }
 
@@ -77,7 +82,7 @@ class WebDaemon {
    * 暂停守护程序
    */
   public pause() {
-    window.clearTimeout(this.timer)
+    global.clearTimeout(this.timer)
     WebDaemon.daemons.delete(this.timer)
     this.paused = true
   }
